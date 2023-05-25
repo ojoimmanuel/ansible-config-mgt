@@ -1,0 +1,21 @@
+---
+- name: Install Apache HTTP Server
+  become: yes
+  apt:
+    name: apache2
+    state: present
+
+- name: Copy load balancer configuration file
+  become: yes
+  template:
+    src: apache.conf.j2
+    dest: /etc/apache2/httpd.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Restart Apache HTTP Server
+  become: yes
+  service:
+    name: apache2
+    state: restarted

@@ -1,0 +1,14 @@
+<VirtualHost *:80>
+   # ServerName myloadbalancer.example.com
+
+    <Proxy balancer://mycluster>
+        
+        BalancerMember http://{{web1}}:80/index.php
+        BalancerMember http://{{web2}}:80/index.php
+        
+    </Proxy>
+
+    ProxyPreserveHost On
+    ProxyPass / balancer://mycluster/
+    ProxyPassReverse / balancer://mycluster/
+</VirtualHost>

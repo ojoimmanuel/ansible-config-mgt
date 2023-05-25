@@ -1,0 +1,6 @@
+---
+enable_nginx_lb: false
+load_balancer_is_required: false
+
+web1: 172.31.86.5
+web2: 172.31.82.69

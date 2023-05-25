@@ -5,6 +5,14 @@
     name: "httpd"
     state: present
 
+- name: set directory root to index.php
+  become: yes
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    regexp: '^DirectoryIndex index.html'
+    line: DirectoryIndex index.php     
+    insertafter: <IfModule dir_module>
+
 - name: install git
   become: true
   ansible.builtin.yum:
