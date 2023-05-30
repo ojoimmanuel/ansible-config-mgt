@@ -1,6 +1,6 @@
 ---
-- name: Restart Apache HTTP Server
+- name: restart apache
   become: yes
   service:
-    name: apache2
-    state: restarted
+    name: "{{ apache_service }}"
+    state: "{{ apache_restart_state }}"
