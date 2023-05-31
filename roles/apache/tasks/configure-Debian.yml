@@ -26,6 +26,26 @@
   with_items: "{{ apache_mods_disabled }}"
   notify: restart apache
 
+  # Enable Apache modules
+- name: Enable rewrite module
+  command: "sudo a2enmod rewrite"
+
+- name: Enable proxy module
+  command: "sudo a2enmod proxy"
+
+- name: Enable proxy_balancer module
+  command: "sudo a2enmod proxy_balancer"
+
+- name: Enable proxy_http module
+  command: "sudo a2enmod proxy_http"
+
+- name: Enable headers module
+  command: "sudo a2enmod headers"
+
+- name: Enable lbmethod_bytraffic module
+  command: "sudo a2enmod lbmethod_bytraffic"
+
+
 - name: Check whether certificates defined in vhosts exist.
   stat: "path={{ item.certificate_file }}"
   register: apache_ssl_certificates
@@ -53,8 +73,9 @@
   when: apache_create_vhosts | bool
 
 - name: Remove default vhost in sites-enabled.
+  become: yes
   file:
     path: "{{ apache_conf_path }}/sites-enabled/{{ apache_default_vhost_filename }}"
     state: absent
   notify: restart apache
-  when: apache_remove_default_vhost
+  # when: apache_remove_default_vhost
